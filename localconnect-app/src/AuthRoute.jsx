@@ -1,11 +1,9 @@
-// src/App.jsx
 import React from "react";
-import Navbar from "./components/Navbar";
-import { Outlet } from "react-router-dom";
+import { Navigate } from "react-router-dom";
 import { useAuth } from "./context/AuthContext";
 
-const App = () => {
-  const { loading } = useAuth();
+const AuthRoute = ({ children }) => {
+  const { user, loading } = useAuth();
 
   if (loading) {
     return (
@@ -15,14 +13,7 @@ const App = () => {
     );
   }
 
-  return (
-    <>
-      <Navbar />
-      <div>
-        <Outlet />
-      </div>
-    </>
-  );
+  return !user ? children : <Navigate to="/services" />;
 };
 
-export default App;
+export default AuthRoute;
